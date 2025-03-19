@@ -1,34 +1,19 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 50px;
-}
-
-input[type="button"] {
-    padding: 10px 20px;
-    font-size: 1.2em;
-    cursor: pointer;
-}
-
-#jatekter {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
 table {
-    border-collapse: collapse;
+    display: grid;
+    grid-template-columns: repeat(11, 40px);
+    grid-template-rows: repeat(11, 40px);
+    margin: 20px;
+    /* Removed gap to eliminate space between the cells */
 }
 
 td {
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    vertical-align: middle;
-    border: 1px solid black;
-    cursor: pointer;
-}
-
-td:hover {
-    background-color: #e0e0e0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin: 0; /* Ensure no margin around the cells */
+    padding: 0; /* Remove any padding inside the cells */
+    border-spacing: 0px;
 }
