@@ -24,13 +24,29 @@ function gen_table(board, table) {
 
         for (let j = 0; j < 11; j++) {
             const cell = document.createElement("td");
-            let content = getCellContent(rowData[j]);
-            cell.innerText = content;
+            const content = rowData[j];
 
-            if (content == "◯") {
+            if (content === 0) {
+                // Pont (◯) képként
+                const circle = document.createElement("img");
+                circle.src = "circle.png"; // Kör kép
+                circle.className = "circle";
+                cell.appendChild(circle);
                 cell.addEventListener("click", function() {
                     place();
-                })
+                });
+            } else if (content === 1) {
+                // Vízszintes vonal (─)
+                const line = document.createElement("img");
+                line.src = "horizontal-line.png"; // Vízszintes vonal képe
+                line.className = "line";
+                cell.appendChild(line);
+            } else if (content === 2) {
+                // Függőleges vonal (│)
+                const line = document.createElement("img");
+                line.src = "vertical-line.png"; // Függőleges vonal képe
+                line.className = "line";
+                cell.appendChild(line);
             }
 
             row.appendChild(cell);
@@ -41,14 +57,5 @@ function gen_table(board, table) {
 }
 
 function place() {
-    console.log("hawk tuah!")
-}
-
-function getCellContent(v) {
-    switch (v) {
-        case 0: return "◯";
-        case 1: return "─";
-        case 2: return "│";
-        case 4: return "";
-    }
+    console.log("hawk tuah!");
 }
