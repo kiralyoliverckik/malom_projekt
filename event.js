@@ -1,6 +1,12 @@
+let currentPlayer;
+let whiteCount = 0;
+let blackCount = 0;
+
 function generate() {
     const board = document.querySelector("table");
     board.innerHTML = "";
+    currentPlayer = 1;
+    document.getElementById("playerText").innerText = "1. Játékos: ⚪";
 
     const table = [
         [0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0],
@@ -26,25 +32,22 @@ function gen_table(board, table) {
             const cell = document.createElement("td");
             const content = rowData[j];
 
-            if (content === 0) {
-                // Pont (◯) képként
+            if (content == 0) {
                 const circle = document.createElement("img");
-                circle.src = "circle.png"; // Kör kép
+                circle.src = "circle.png";
                 circle.className = "circle";
                 cell.appendChild(circle);
                 cell.addEventListener("click", function() {
-                    place();
+                    place(cell);
                 });
-            } else if (content === 1) {
-                // Vízszintes vonal (─)
+            } else if (content == 1) {
                 const line = document.createElement("img");
-                line.src = "horizontal-line.png"; // Vízszintes vonal képe
+                line.src = "horizontal-line.png";
                 line.className = "line";
                 cell.appendChild(line);
-            } else if (content === 2) {
-                // Függőleges vonal (│)
+            } else if (content == 2) {
                 const line = document.createElement("img");
-                line.src = "vertical-line.png"; // Függőleges vonal képe
+                line.src = "vertical-line.png";
                 line.className = "line";
                 cell.appendChild(line);
             }
@@ -56,6 +59,29 @@ function gen_table(board, table) {
     }
 }
 
-function place() {
-    console.log("hawk tuah!");
+function place(cell) {
+    if (whiteCount >= 9 && blackCount >= 9) {
+        alert("lerakas vege");
+        return;
+    }
+
+    if (cell.innerHTML == "img") return;
+
+    const img = document.createElement("img");
+    img.className = "piece";
+
+    if (currentPlayer == 1) {
+        img.src = "white.png";
+        whiteCount++;
+        currentPlayer = 2;
+        document.getElementById("playerText").innerText = "2. Játékos: ⚫";
+    } else {
+        img.src = "black.png";
+        blackCount++;
+        currentPlayer = 1;
+        document.getElementById("playerText").innerText = "1. Játékos: ⚪";
+    }
+
+    cell.innerHTML = "";
+    cell.appendChild(img); 
 }
