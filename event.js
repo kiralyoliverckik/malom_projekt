@@ -1,11 +1,13 @@
 let currentPlayer;
-let whiteCount = 0;
-let blackCount = 0;
+let whiteCount;
+let blackCount;
 
 function generate() {
     const board = document.querySelector("table");
     board.innerHTML = "";
     currentPlayer = 1;
+    whiteCount = 0;
+    blackCount = 0;
     document.getElementById("playerText").innerText = "1. Játékos: ⚪";
 
     const table = [
@@ -61,11 +63,11 @@ function gen_table(board, table) {
 
 function place(cell) {
     if (whiteCount >= 9 && blackCount >= 9) {
-        alert("lerakas vege");
+        alert("Lerakás vége");
         return;
     }
 
-    if (cell.innerHTML == "img") return;
+    if (cell.querySelector(".piece")) return;
 
     const img = document.createElement("img");
     img.className = "piece";
@@ -73,15 +75,21 @@ function place(cell) {
     if (currentPlayer == 1) {
         img.src = "white.png";
         whiteCount++;
+        document.getElementById("ketto").innerText = "1. Lerakható még: " + (9 - whiteCount);
         currentPlayer = 2;
         document.getElementById("playerText").innerText = "2. Játékos: ⚫";
     } else {
         img.src = "black.png";
         blackCount++;
+        document.getElementById("egy").innerText = "2. Lerakható még: " + (9 - blackCount);
         currentPlayer = 1;
         document.getElementById("playerText").innerText = "1. Játékos: ⚪";
     }
 
+    if (whiteCount >= 9 && blackCount >= 9) {
+        alert("Lerakás vége");
+    }
+
     cell.innerHTML = "";
-    cell.appendChild(img); 
+    cell.appendChild(img);
 }

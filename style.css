@@ -8,6 +8,19 @@ body {
     background-color: #ffffcd;
 }
 
+#egy {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    /* transform: scaleX(-1); */
+}
+
+#ketto {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
 input {
   background-color: rgba(51, 51, 51, 0.45);
   border-radius: 8px;
@@ -40,12 +53,6 @@ td {
     vertical-align: middle;
 }
 
-.circle, .line {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
 p {
     margin-bottom: 5px;
 }
@@ -55,7 +62,8 @@ div {
     font-size: 1.55em;
 }
 
-.piece {
+.piece, .circle, .line {
     width: 100%;
     height: 100%;
+    display: block;
 }
