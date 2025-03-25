@@ -2,6 +2,14 @@ table {
     border-collapse: collapse;
     margin: auto;
     margin-top: 20px;
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: auto;
+}
+
+.selected {
+    background-color: yellow;
+    border: 2px solid orange;
 }
 
 body {
@@ -65,5 +73,8 @@ div {
 .piece, .circle, .line {
     width: 100%;
     height: 100%;
+    /* user-drag: none; */
+    user-select: none;
+    -webkit-user-drag: none;
     display: block;
 }

@@ -2,6 +2,20 @@ let currentPlayer;
 let whiteCount;
 let blackCount;
 let alerttriggered = false;
+let positions = [
+    [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2],
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+    [1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 1],
+    [1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1],
+    [1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 1],
+    [2, 1, 2, 1, 2, 0, 2, 1, 2, 1, 2],
+    [1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 1],
+    [1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1],
+    [1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 1],
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+    [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2],
+]
+
 
 function generate() {
     const board = document.querySelector("table");
@@ -50,6 +64,11 @@ function gen_table(board, table) {
                     }
                     else {
                         move(cell);
+                        // for (let i = 0; i < positions.length; i++) {
+                        //     for (let j = 0; j < positions[i].length; j++) {
+                        //         console.log(positions[i][j])
+                        //     }
+                        // }
                     }
                 });
             } else if (content == 1) {
@@ -79,18 +98,23 @@ function place(cell) {
     const img = document.createElement("img");
     img.className = "piece";
 
+    let row = cell.parentNode.rowIndex;
+    let col = cell.cellIndex;
+
     if (currentPlayer == 1) {
         img.src = "white.png";
         whiteCount++;
         document.getElementById("egy").innerText = "1. Lerakható még: " + (9 - whiteCount);
         currentPlayer = 2;
         document.getElementById("playerText").innerText = "2. Játékos: ⚫";
+        positions[row][col] = 5;
     } else {
         img.src = "black.png";
         blackCount++;
         document.getElementById("ketto").innerText = "2. Lerakható még: " + (9 - blackCount);
         currentPlayer = 1;
         document.getElementById("playerText").innerText = "1. Játékos: ⚪";
+        positions[row][col] = 7;
     }
 
     cell.innerHTML = "";
