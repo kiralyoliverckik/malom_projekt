@@ -1,6 +1,7 @@
 let currentPlayer;
 let whiteCount;
 let blackCount;
+let alerttriggered = false;
 
 function generate() {
     const board = document.querySelector("table");
@@ -22,6 +23,10 @@ function generate() {
     gen_table(board, table);
 }
 
+function move(cell) {
+    console.log("masodik");
+}
+
 function gen_table(board, table) {
     for (let i = 0; i < 11; i++) {
         const row = document.createElement("tr");
@@ -40,7 +45,12 @@ function gen_table(board, table) {
                 circle.className = "circle";
                 cell.appendChild(circle);
                 cell.addEventListener("click", function() {
-                    place(cell);
+                    if (!alerttriggered) {
+                        place(cell);
+                    }
+                    else {
+                        move(cell);
+                    }
                 });
             } else if (content == 1) {
                 const line = document.createElement("img");
@@ -61,12 +71,11 @@ function gen_table(board, table) {
     }
 }
 
-function place(cell) {
-    if (whiteCount >= 9 && blackCount >= 9) {
-        alert("Lerakás vége");
-        return;
-    }
 
+
+function place(cell) {
+    console.log("elso");
+    
     if (cell.querySelector(".piece")) return;
 
     const img = document.createElement("img");
@@ -86,10 +95,15 @@ function place(cell) {
         document.getElementById("playerText").innerText = "1. Játékos: ⚪";
     }
 
-    if (whiteCount >= 9 && blackCount >= 9) {
-        alert("Lerakás vége");
-    }
-
     cell.innerHTML = "";
     cell.appendChild(img);
+
+    if (whiteCount >= 9 && blackCount >= 9) {
+        if (!alerttriggered) {
+            alert("Lerakás vége");
+            alerttriggered = true;
+        }
+        
+    }
 }
+
