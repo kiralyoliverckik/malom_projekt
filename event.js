@@ -24,7 +24,7 @@ function generate() {
 }
 
 function move(cell) {
-    console.log("masodik");
+    console.log("mozog");
 }
 
 function gen_table(board, table) {
@@ -71,8 +71,6 @@ function gen_table(board, table) {
     }
 }
 
-
-
 function place(cell) {
     console.log("elso");
     
@@ -84,13 +82,13 @@ function place(cell) {
     if (currentPlayer == 1) {
         img.src = "white.png";
         whiteCount++;
-        document.getElementById("ketto").innerText = "1. Lerakható még: " + (9 - whiteCount);
+        document.getElementById("egy").innerText = "1. Lerakható még: " + (9 - whiteCount);
         currentPlayer = 2;
         document.getElementById("playerText").innerText = "2. Játékos: ⚫";
     } else {
         img.src = "black.png";
         blackCount++;
-        document.getElementById("egy").innerText = "2. Lerakható még: " + (9 - blackCount);
+        document.getElementById("ketto").innerText = "2. Lerakható még: " + (9 - blackCount);
         currentPlayer = 1;
         document.getElementById("playerText").innerText = "1. Játékos: ⚪";
     }
@@ -100,10 +98,12 @@ function place(cell) {
 
     if (whiteCount >= 9 && blackCount >= 9) {
         if (!alerttriggered) {
-            alert("Lerakás vége");
+            alert("Lerakás vége, indulhat a játék!");
             alerttriggered = true;
         }
-        
+        if (alerttriggered) {
+            document.getElementById("egy").innerText = "1. Hátralévő ⚪ bábuk: " + whiteCount;
+            document.getElementById("ketto").innerText = "2. Hátralévő ⚫ bábuk: " + blackCount;
+        }
     }
 }
-
