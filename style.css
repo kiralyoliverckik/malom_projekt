@@ -7,20 +7,25 @@ table {
     pointer-events: auto;
 }
 
-.selected {
-    background-color: yellow;
-    border: 2px solid orange;
-}
-
 body {
     background-color: #ffffcd;
+}
+
+.selected {
+    background-color: #ffeb3b;
+    box-shadow: 0 0 10px #ffc107;
+}
+
+.highlight {
+    background-color: #8bc34a;
+    cursor: pointer;
+    animation: pulse 1s infinite;
 }
 
 #egy {
     position: absolute;
     right: 10px;
     top: 10px;
-    /* transform: scaleX(-1); */
 }
 
 #ketto {
@@ -73,8 +78,13 @@ div {
 .piece, .circle, .line {
     width: 100%;
     height: 100%;
-    /* user-drag: none; */
     user-select: none;
     -webkit-user-drag: none;
     display: block;
+}
+
+@keyframes pulse {
+    0% { background-color: #8bc34a; }
+    50% { background-color: #7cb342; }
+    100% { background-color: #8bc34a; }
 }

@@ -41,6 +41,12 @@ function move(cell) {
     console.log("mozog");
 }
 
+// for (let i = 0; i < positions.length; i++) {
+//     for (let j = 0; j < positions[i].length; j++) {
+//         console.log(positions[i][j])
+//     }
+// }
+
 function gen_table(board, table) {
     for (let i = 0; i < 11; i++) {
         const row = document.createElement("tr");
@@ -64,11 +70,6 @@ function gen_table(board, table) {
                     }
                     else {
                         move(cell);
-                        // for (let i = 0; i < positions.length; i++) {
-                        //     for (let j = 0; j < positions[i].length; j++) {
-                        //         console.log(positions[i][j])
-                        //     }
-                        // }
                     }
                 });
             } else if (content == 1) {
