@@ -46,34 +46,70 @@ function generate() {
 function move(cell) {
     const row = cell.parentNode.rowIndex;
     const col = cell.cellIndex;
+    let selected = false;
 
-        if ((currentPlayer == 1 && positions[row][col] == 5) || (currentPlayer == 2 && positions[row][col] == 7)) {
+        if ((currentPlayer == 1 && positions[row][col] == 5) || (currentPlayer == 2 && positions[row][col] == 7) && !selected) {
             console.log("selected" + row + ", " + col);
+
             selectedPiece = cell;
+            
             highlightMoves(row, col);
-        } else {
-            console.log("invalid");
+            selected = true;
+        }
+
+
+        if (selected && cell.classList.contains("highlight")) {
+            console.log("aaa: " + row + ", " + col);
+        } else if (selected) {
+            console.log("bbb.");
         }
 }
 
-function highlightMoves() {
-    // [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2],
-    // [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-    // [1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 1],
-    // [1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1],
-    // [1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 1],
-    // [2, 1, 2, 1, 2, 0, 2, 1, 2, 1, 2],
-    // [1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 1],
-    // [1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1],
-    // [1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 1],
-    // [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-    // [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2],
-    // del --> elso koord +1
-    // eszak --> elso kord -1
-    // kelet --> masodik kord + 1
-    // nyugat --> masodik kord -1;
-    if (condition) {
-        
+function resetHighlights() {
+    const cells = document.querySelectorAll("td");
+
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].classList.remove("highlight");
+    }
+}
+
+function highlightMoves(r, c) {
+    const directions = [
+        [-1, 0], // eszak
+        [1, 0], // del
+        [0, -1], // nyugat
+        [0, 1] // kelet
+    ];
+
+    resetHighlights();
+
+    for (let i = 0; i < directions.length; i++) {
+        let row = r;
+        let col = c;
+        let empty = false;
+
+        while (true) {
+            row += directions[i][0];
+            col += directions[i][1];
+
+            if (row < 0 || row >= positions.length || col < 0 || col >= positions[row].length) break;
+
+            const cell = document.querySelector("table").rows[row].cells[col];
+            const value = positions[row][col];
+
+            if (value == 5 || value == 7) break;
+
+            if (value == 0) break;
+
+            if (value == 2 && !empty) {
+                cell.classList.add("highlight");
+                empty = true; 
+            }
+
+            if (value == 2 && empty) {
+                break;
+            }
+        }
     }
 }
 
