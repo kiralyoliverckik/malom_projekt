@@ -11,15 +11,17 @@ body {
     background-color: #ffffcd;
 }
 
-.selected {
-    background-color: #ffeb3b;
-    box-shadow: 0 0 10px #ffc107;
-}
-
 .highlight {
     background-color: #8bc34a;
     cursor: pointer;
     animation: pulse 1s infinite;
+    border-radius: 3px;
+}
+
+.selected {
+    background-color: #c03e16;
+    border-radius: 3px;
+    animation: pulsebg 1s infinite alternate;
 }
 
 #egy {
@@ -87,4 +89,13 @@ div {
     0% { background-color: #8bc34a; }
     50% { background-color: #7cb342; }
     100% { background-color: #8bc34a; }
+}
+
+@keyframes pulsebg {
+    0% {
+        background-color: #c03e16;
+    }
+    100% {
+        background-color: #ff7043;
+    }
 }

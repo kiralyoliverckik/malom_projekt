@@ -1,32 +1,34 @@
-let currentPlayer;
-let whiteCount;
-let blackCount;
-let selectedPiece;
-let alerttriggered = false;
-let positions = [
-    [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2],
-    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-    [1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 1],
-    [1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1],
-    [1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 1],
-    [2, 1, 2, 1, 2, 0, 2, 1, 2, 1, 2],
-    [1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 1],
-    [1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1],
-    [1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 1],
-    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-    [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2],
-]
+let cplayer;
+let wcount;
+let bcount;
+let alert_t = false;
+let positions;
+let selected = false;
 
 
 function generate() {
-    alerttriggered = false;
+    positions = [
+        [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2],
+        [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+        [1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 1],
+        [1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1],
+        [1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 1],
+        [2, 1, 2, 1, 2, 0, 2, 1, 2, 1, 2],
+        [1, 0, 1, 0, 2, 2, 2, 0, 1, 0, 1],
+        [1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1],
+        [1, 0, 2, 1, 1, 2, 1, 1, 2, 0, 1],
+        [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+        [2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 2],
+    ]
+
+    alert_t = false;
     const board = document.querySelector("table");
     board.innerHTML = "";
     document.querySelector("input").value = "Reset";
-    currentPlayer = 1;
-    whiteCount = 0;
-    blackCount = 0;
-    document.getElementById("playerText").innerText = "1. Játékos: ⚪";
+    cplayer = 1;
+    wcount = 0;
+    bcount = 0;
+    document.getElementById("ptext").innerText = "1. Játékos: ⚪";
     document.getElementById("egy").innerText = "1. Lerakható ⚪ még: " + 9;
     document.getElementById("ketto").innerText = "2. Lerakható ⚫ még: " + 9;
 
@@ -46,42 +48,74 @@ function generate() {
 function move(cell) {
     const row = cell.parentNode.rowIndex;
     const col = cell.cellIndex;
-    let selected = false;
 
-        if ((currentPlayer == 1 && positions[row][col] == 5) || (currentPlayer == 2 && positions[row][col] == 7) && !selected) {
-            console.log("selected" + row + ", " + col);
-
-            selectedPiece = cell;
-            
-            highlightMoves(row, col);
-            selected = true;
+    if ((cplayer == 1 && positions[row][col] == 5) || (cplayer == 2 && positions[row][col] == 7)) {
+        if (selected) {
+            r_highlights();
         }
 
+        highlight2(cell);
+        highlight(row, col);
+        selected = true;
 
-        if (selected && cell.classList.contains("highlight")) {
-            console.log("aaa: " + row + ", " + col);
-        } else if (selected) {
-            console.log("bbb.");
-        }
+        oldr = row;
+        oldc = col;
+    } 
+    else if (selected && cell.classList.contains("highlight")) {
+        update(oldr, oldc, cell);
+        selected = false;
+    }
 }
 
-function resetHighlights() {
+function highlight2(c) {
+    c.classList.add("selected");
+}
+
+function update(oldr, oldc, cell) {
+    const newr = cell.parentNode.rowIndex;
+    const newc = cell.cellIndex;
+    const value = positions[oldr][oldc];
+
+    positions[newr][newc] = value;
+    positions[oldr][oldc] = 2;
+
+    const old = document.querySelector("table").rows[oldr].cells[oldc];
+    const spot = document.createElement("img");
+    spot.src = "circle.png";
+    spot.className = "circle";
+    old.innerHTML = "";
+    old.appendChild(spot);
+
+    const piece = document.createElement("img");
+    piece.className = "piece";
+    piece.src = value == 5 ? "white.png" : "black.png";
+    cell.innerHTML = "";
+    cell.appendChild(piece);
+
+    cplayer = cplayer == 1 ? 2 : 1;
+    document.getElementById("ptext").innerText = cplayer == 1 ? "1. Játékos: ⚪" : "2. Játékos: ⚫";
+
+    r_highlights();
+}
+
+
+
+function r_highlights() {
     const cells = document.querySelectorAll("td");
 
     for (let i = 0; i < cells.length; i++) {
         cells[i].classList.remove("highlight");
+        cells[i].classList.remove("selected");
     }
 }
 
-function highlightMoves(r, c) {
+function highlight(r, c) {
     const directions = [
-        [-1, 0], // eszak
-        [1, 0], // del
-        [0, -1], // nyugat
-        [0, 1] // kelet
+        [-1, 0],
+        [1, 0],
+        [0, -1],
+        [0, 1]
     ];
-
-    resetHighlights();
 
     for (let i = 0; i < directions.length; i++) {
         let row = r;
@@ -131,7 +165,7 @@ function gen_table(board, table) {
                 circle.className = "circle";
                 cell.appendChild(circle);
                 cell.addEventListener("click", function() {
-                    if (!alerttriggered) {
+                    if (!alert_t) {
                         place(cell);
                     }
                     else {
@@ -168,33 +202,33 @@ function place(cell) {
     let row = cell.parentNode.rowIndex;
     let col = cell.cellIndex;
 
-    if (currentPlayer == 1) {
+    if (cplayer == 1) {
         img.src = "white.png";
-        whiteCount++;
-        document.getElementById("egy").innerText = "1. Lerakható ⚪ még: " + (9 - whiteCount);
-        currentPlayer = 2;
-        document.getElementById("playerText").innerText = "2. Játékos: ⚫";
+        wcount++;
+        document.getElementById("egy").innerText = "1. Lerakható ⚪ még: " + (9 - wcount);
+        cplayer = 2;
+        document.getElementById("ptext").innerText = "2. Játékos: ⚫";
         positions[row][col] = 5;
     } else {
         img.src = "black.png";
-        blackCount++;
-        document.getElementById("ketto").innerText = "2. Lerakható ⚫ még: " + (9 - blackCount);
-        currentPlayer = 1;
-        document.getElementById("playerText").innerText = "1. Játékos: ⚪";
+        bcount++;
+        document.getElementById("ketto").innerText = "2. Lerakható ⚫ még: " + (9 - bcount);
+        cplayer = 1;
+        document.getElementById("ptext").innerText = "1. Játékos: ⚪";
         positions[row][col] = 7;
     }
 
     cell.innerHTML = "";
     cell.appendChild(img);
 
-    if (whiteCount >= 9 && blackCount >= 9) {
-        if (!alerttriggered) {
+    if (wcount >= 9 && bcount >= 9) {
+        if (!alert_t) {
             alert("Lerakás vége, indulhat a játék!");
-            alerttriggered = true;
+            alert_t = true;
         }
-        if (alerttriggered) {
-            document.getElementById("egy").innerText = "1. Hátralévő ⚪ bábuk: " + whiteCount;
-            document.getElementById("ketto").innerText = "2. Hátralévő ⚫ bábuk: " + blackCount;
+        if (alert_t) {
+            document.getElementById("egy").innerText = "1. Hátralévő ⚪ bábuk: " + wcount;
+            document.getElementById("ketto").innerText = "2. Hátralévő ⚫ bábuk: " + bcount;
         }
     }
 }
