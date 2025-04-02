@@ -121,8 +121,8 @@ function checkmills() {
         let [r2, c2] = b;
         let [r3, c3] = c;
 
-        if (positions[r1][c1] === positions[r2][c2] && positions[r2][c2] === positions[r3][c3] &&
-            (positions[r1][c1] === 5 || positions[r1][c1] === 7)) {
+        if (positions[r1][c1] == positions[r2][c2] && positions[r2][c2] == positions[r3][c3] &&
+            (positions[r1][c1] == 5 || positions[r1][c1] == 7)) {
                 highlight3(mill);
         }
     }
