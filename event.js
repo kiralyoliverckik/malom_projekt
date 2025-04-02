@@ -96,9 +96,43 @@ function update(oldr, oldc, cell) {
     document.getElementById("ptext").innerText = cplayer == 1 ? "1. Játékos: ⚪" : "2. Játékos: ⚫";
 
     r_highlights();
+    checkmills();
 }
 
+function checkmills() {
+    console.log("cp:", cplayer);
+    
+    const pos = [
+        [[0, 0], [5, 0], [10, 0]],
+        [[0, 5], [5, 5], [10, 5]],
+        [[0, 10], [5, 10], [10, 10]],
+        [[2, 2], [2, 5], [2, 8]],
+        [[4, 4], [4, 5], [4, 6]],
+        [[5, 0], [5, 2], [5, 4]],
+        [[5, 6], [5, 8], [5, 10]],
+        [[6, 4], [6, 5], [6, 6]],
+        [[8, 2], [8, 5], [8, 8]],
+        [[10, 0], [10, 5], [10, 10]]
+    ];
+    
+    for (let mill of pos) {
+        let [a, b, c] = mill;
+        let [r1, c1] = a;
+        let [r2, c2] = b;
+        let [r3, c3] = c;
 
+        if (positions[r1][c1] === positions[r2][c2] && positions[r2][c2] === positions[r3][c3] &&
+            (positions[r1][c1] === 5 || positions[r1][c1] === 7)) {
+                highlight3(mill);
+        }
+    }
+}
+
+function highlight3(cells) {
+    for (let [row, col] of cells) {
+        document.querySelector("table").rows[row].cells[col].classList.add("mill");
+    }
+}
 
 function r_highlights() {
     const cells = document.querySelectorAll("td");

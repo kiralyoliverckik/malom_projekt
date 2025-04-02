@@ -30,6 +30,12 @@ body {
     top: 10px;
 }
 
+.mill {
+    background-color: #1cc016;
+    border-radius: 3px;
+    /* animation: pulsebg 1s infinite alternate; */
+}
+
 #ketto {
     position: absolute;
     left: 10px;
