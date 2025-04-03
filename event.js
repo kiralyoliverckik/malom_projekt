@@ -4,7 +4,7 @@ let bcount;
 let alert_t = false;
 let positions;
 let selected = false;
-
+let active = [];
 
 function generate() {
     positions = [
@@ -31,6 +31,7 @@ function generate() {
     document.getElementById("ptext").innerText = "1. Játékos: ⚪";
     document.getElementById("egy").innerText = "1. Lerakható ⚪ még: " + 9;
     document.getElementById("ketto").innerText = "2. Lerakható ⚫ még: " + 9;
+    active = [];
 
     const table = [
         [0, 2, 2, 2, 2, 0, 2, 2, 2, 2, 0],
@@ -100,11 +101,16 @@ function update(oldr, oldc, cell) {
 }
 
 function checkmills() {
-    console.log("cp:", cplayer);
-    
+    const cellz = document.querySelectorAll(".mill");
+    for (let i = 0; i < cellz.length; i++) {
+        cellz[i].classList.remove("mill");
+    }
+
+    active = [];
     const pos = [
         [[0, 0], [5, 0], [10, 0]],
         [[0, 5], [5, 5], [10, 5]],
+        [[0, 0], [0, 5], [0, 10]],
         [[0, 10], [5, 10], [10, 10]],
         [[2, 2], [2, 5], [2, 8]],
         [[4, 4], [4, 5], [4, 6]],
@@ -112,18 +118,40 @@ function checkmills() {
         [[5, 6], [5, 8], [5, 10]],
         [[6, 4], [6, 5], [6, 6]],
         [[8, 2], [8, 5], [8, 8]],
-        [[10, 0], [10, 5], [10, 10]]
+        [[2, 2], [5, 2], [8, 2]],
+        [[2, 8], [5, 8], [8, 8]],
+        [[10, 0], [10, 5], [10, 10]],
+        [[4, 6], [5, 6], [6, 6]],
+        [[4, 4], [5, 4], [6, 4]],
+        [[0, 5], [2, 5], [4, 5]],
+        [[6, 5], [8, 5], [10, 5]]
     ];
-    
-    for (let mill of pos) {
+
+    for (let i = 0; i < pos.length; i++) {
+        let mill = pos[i];
         let [a, b, c] = mill;
         let [r1, c1] = a;
         let [r2, c2] = b;
         let [r3, c3] = c;
 
-        if (positions[r1][c1] == positions[r2][c2] && positions[r2][c2] == positions[r3][c3] &&
+        if (positions[r1][c1] == positions[r2][c2] && 
+            positions[r2][c2] == positions[r3][c3] &&
             (positions[r1][c1] == 5 || positions[r1][c1] == 7)) {
-                highlight3(mill);
+            highlight3(mill);
+            active.push(mill);
+        }
+    }
+
+    for (let i = active.length - 1; i >= 0; i--) {
+        let mill = active[i];
+        let [a, b, c] = mill;
+        let [r1, c1] = a;
+        let [r2, c2] = b;
+        let [r3, c3] = c;
+
+        if (!(positions[r1][c1] == positions[r2][c2] && 
+                positions[r2][c2] == positions[r3][c3])) {
+            active.pop();
         }
     }
 }
@@ -227,8 +255,6 @@ function gen_table(board, table) {
 }
 
 function place(cell) {
-    console.log("elso");
-    
     if (cell.querySelector(".piece")) return;
 
     const img = document.createElement("img");
