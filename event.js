@@ -201,8 +201,9 @@ function gen_table(board, table) {
                 cell.addEventListener("click", function() {
                     if (!alert_t) {
                         place(cell);
+                        checkmills()
                     }
-                    else {
+                    else if (wcount >= 2 || bcount >= 2) {
                         move(cell);
                     }
                 });
