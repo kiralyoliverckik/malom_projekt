@@ -139,6 +139,7 @@ function checkmills() {
             (positions[r1][c1] == 5 || positions[r1][c1] == 7)) {
             highlight3(mill);
             active.push(mill);
+            remove();
         }
     }
 
@@ -154,6 +155,16 @@ function checkmills() {
             active.pop();
         }
     }
+}
+
+function remove() {
+    const cells = document.querySelectorAll("td");
+
+    for (let i = 0; i < cells.length; i++) {
+            if (cells[i].src == "white.png") {
+                cells[i].classList.add("remove");
+            }
+        }
 }
 
 function highlight3(cells) {
