@@ -1,18 +1,18 @@
+body {
+    background-color: #ffffcd;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
 table {
     border-collapse: collapse;
-    margin: auto;
-    margin-top: 20px;
+    margin: 20px auto;
     user-select: none;
     -webkit-user-drag: none;
     pointer-events: auto;
-}
-
-body {
-    background-color: #ffffcd;
-}
-
-body {
-    background-color: #ffffcd;
+    max-width: 100%;
 }
 
 .remove {
@@ -50,44 +50,34 @@ body {
     100% { background-color: #ff9e80; }
 }
 
-#egy {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-}
-
-#ketto {
-    position: absolute;
-    left: 10px;
-    top: 10px;
+#egy, #ketto {
+    position: static;
+    margin: 10px;
+    text-align: center;
 }
 
 input {
-  background-color: rgba(51, 51, 51, 0.45);
-  border-radius: 8px;
-  border-width: 0;
-  color: #333333;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 20px;
-  list-style: none;
-  margin: 0;
-  padding: 10px 12px;
-  text-align: center;
-  transition: all 200ms;
-  vertical-align: baseline;
-  white-space: nowrap;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
+    background-color: rgba(51, 51, 51, 0.45);
+    border-radius: 8px;
+    border-width: 0;
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    margin: 10px 0;
+    padding: 10px 12px;
+    text-align: center;
+    transition: all 200ms;
+    width: 100%;
+    max-width: 200px;
 }
 
 td {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -95,12 +85,26 @@ td {
 }
 
 p {
-    margin-bottom: 5px;
+    margin: 10px 0;
+    text-align: center;
 }
 
-div {
-    text-align: center;
-    font-size: 1.55em;
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .piece, .circle, .line {
@@ -111,17 +115,36 @@ div {
     display: block;
 }
 
-/* @keyframes pulse {
-    0% { background-color: #8bc34a; }
-    50% { background-color: #7cb342; }
-    100% { background-color: #8bc34a; }
+div {
+    text-align: center;
+    font-size: 1.55em;
 }
 
-@keyframes pulsebg {
-    0% {
-        background-color: #c03e16;
+@media only screen and (min-width: 600px) {
+    td {
+        width: 40px;
+        height: 40px;
     }
-    100% {
-        background-color: #ff7043;
+}
+
+@media only screen and (max-width: 480px) {
+    h1 {
+        font-size: 18px;
     }
-} */
+    
+    p {
+        font-size: 14px;
+    }
+    
+    td {
+        width: 25px;
+        height: 25px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    td {
+        width: 20px;
+        height: 20px;
+    }
+}
