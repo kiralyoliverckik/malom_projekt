@@ -195,7 +195,7 @@ function checkmills() {
 
 function comparemill(mill1, mill2) {
     const normalize = (mill) => {
-        return mill.map(cell => `${cell[0]},${cell[1]}`).sort().join(','); //jaaaaaaa teso jaaa
+        return mill.map(cell => `${cell[0]},${cell[1]}`).sort().join(';');
     };
     
     return normalize(mill1) == normalize(mill2);
